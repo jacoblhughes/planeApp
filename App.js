@@ -1,21 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
 
-export default function App() {
+import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createStore } from "redux";
+
+import reducer from "./src/reducers/planeReducer";
+
+import HomeScreen from "./src/screens/HomeScreen";
+import OpenScreen from "./src/screens/OpenScreen";
+import AJSScreen from "./src/screens/AJSScreen";
+import BSGScreen from "./src/screens/BSGScreen";
+
+
+const Stack = createStackNavigator();
+
+const store = createStore(reducer);
+
+function OpenSec() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Open" component={OpenScreen} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function HomeSec() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AJSSec() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="AJS" component={AJSScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function BSGSec() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="BSG" component={BSGScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="OpenSec">
+          <Stack.Screen name="OpenSec" component={OpenSec} />
+          <Stack.Screen name="HomeSec" component={HomeSec} />
+          <Stack.Screen name="AJSSec" component={AJSSec} />
+          <Stack.Screen name="BSGSec" component={BSGSec} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+}
+
+export default App;
